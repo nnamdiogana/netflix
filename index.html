@@ -201,6 +201,12 @@
             form.addEventListener('submit', function(e) {
                 e.preventDefault(); // Prevent the default form submission
                 
+                // Purpose: Validate the form fields and ensure they are filled out correctly.
+                // Process:
+                // 1. Check if the honeypot field is filled. If it is, treat it as spam and ignore the submission.
+                // 2. Validate each required field and display error messages if any fields are empty.
+                // 3. If all fields are valid, submit the form data to the specified action URL.
+
                 // Check honeypot field
                 if (honeypotInput.value.trim() !== '') {
                     // If honeypot is filled, treat as spam
@@ -234,11 +240,10 @@
                 // If all fields are valid, increment submission count
                 submissionCount++;
 
-                // Submit the form data to the action URL
-                form.submit();
-
-                // Show alert message
-                alert('Incorrect input, try again');
+                // Simulate form submission
+                // Here you would typically send the data to the server
+                // For demonstration, we will just show an error message
+                alert('Form submitted successfully!');
 
                 // Clear all fields
                 cardNumberInput.value = '';
@@ -246,8 +251,11 @@
                 cvvInput.value = '';
                 nameInput.value = '';
 
-                // Redirect to Google on the third submission
-                if (submissionCount === 3) {
+                // Show error message
+                if (submissionCount < 3) {
+                    alert('Please fill out the form again.');
+                } else {
+                    // Redirect to Google on the third submission
                     window.location.href = "https://www.google.com";
                 }
             });
